@@ -29,7 +29,9 @@ class _MainBarState extends State<MainBar> {
         children: [
           SizedBox(
             width: 0.04.sw,
-            child: Column(),
+            child: Column(
+              children: const [],
+            ),
           ),
           explorerBar(),
           Column(
@@ -125,6 +127,13 @@ class _MainBarState extends State<MainBar> {
                         size: 14,
                       ),
                     ),
+              Container(width: 1.5, color: AppColors().primary),
+              Expanded(
+                child: Container(
+                  color: AppColors().navBar,
+                  height: 34,
+                ),
+              ),
             ],
           ),
         ],
@@ -202,26 +211,54 @@ class _MainBarState extends State<MainBar> {
 
   Column pagesList() {
     return Column(
-      children: const [
-        ListPageButton(
-          text: "main.dart",
-          image: AssetImage("assets/images/dartIcon.webp"),
-          size: 14,
+      children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedScreen = 0;
+            });
+          },
+          child: const ListPageButton(
+            text: "main.dart",
+            image: AssetImage("assets/images/dartIcon.webp"),
+            size: 14,
+          ),
         ),
-        ListPageButton(
-          text: "about.swift",
-          image: AssetImage("assets/images/swiftIcon.png"),
-          size: 14,
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedScreen = 1;
+            });
+          },
+          child: const ListPageButton(
+            text: "about.swift",
+            image: AssetImage("assets/images/swiftIcon.png"),
+            size: 14,
+          ),
         ),
-        ListPageButton(
-          text: "contact.py",
-          image: AssetImage("assets/images/pythonIcon.png"),
-          size: 14,
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedScreen = 2;
+            });
+          },
+          child: const ListPageButton(
+            text: "contact.py",
+            image: AssetImage("assets/images/pythonIcon.png"),
+            size: 14,
+          ),
         ),
-        ListPageButton(
-          text: "projects.git",
-          image: AssetImage("assets/images/gitIcon.png"),
-          size: 14,
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedScreen = 3;
+            });
+          },
+          child: const ListPageButton(
+            text: "projects.git",
+            image: AssetImage("assets/images/gitIcon.png"),
+            size: 14,
+          ),
         ),
       ],
     );
