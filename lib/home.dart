@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/constants/colors.dart';
 import 'package:portfolio/widgets/bottomnavBar.dart';
+import 'package:portfolio/widgets/mainBar.dart';
 
 import 'widgets/topNavBar.dart';
 
@@ -14,7 +15,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: colors.primary,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [TopNavBar(), BottomNavBar()],
+        children: const [TopNavBar(), MainBar(), BottomNavBar()],
       ),
     );
   }

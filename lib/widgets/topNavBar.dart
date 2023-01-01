@@ -10,18 +10,23 @@ class TopNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppColors colors = AppColors();
-    return Container(
-      height: 28,
-      color: colors.navBar,
-      width: 1.sw,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          leftAlignedElements(),
-          centerAlignedElements(),
-          rightAlignedElement(),
-        ],
-      ),
+    return Column(
+      children: [
+        Container(
+          height: 28,
+          color: colors.navBar,
+          width: 1.sw,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              leftAlignedElements(),
+              centerAlignedElements(),
+              rightAlignedElement(),
+            ],
+          ),
+        ),
+        Container(height: 0.5, color: Colors.black38)
+      ],
     );
   }
 

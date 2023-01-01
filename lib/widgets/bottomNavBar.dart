@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:portfolio/constants/colors.dart';
@@ -8,17 +10,22 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppColors colors = AppColors();
-    return Container(
-      height: 28,
-      color: colors.navBar,
-      width: 1.sw,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          leftAlignedElements(),
-          rightAlignedElements(),
-        ],
-      ),
+    return Column(
+      children: [
+        Container(height: 0.5, color: Colors.black38),
+        Container(
+          height: 28,
+          color: colors.navBar,
+          width: 1.sw,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              leftAlignedElements(),
+              rightAlignedElements(),
+            ],
+          ),
+        )
+      ],
     );
   }
 
@@ -60,7 +67,7 @@ class BottomNavBar extends StatelessWidget {
           ),
         ),
         BottomNavItem(text: "main")
-        // TODO: Warnings menu
+        // TODO: Warnings Menu
       ],
     );
   }
