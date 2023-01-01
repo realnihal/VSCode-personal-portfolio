@@ -50,38 +50,81 @@ class _MainBarState extends State<MainBar> {
         children: [
           Row(
             children: [
-              const WorkingTab(
-                text: "main.dart",
-                image: AssetImage("assets/images/dartIcon.webp"),
-                size: 14,
-              ),
-              Container(
-                width: 1.5,
-                color: AppColors().primary,
-              ),
-              const WorkingTab(
-                text: "about.swift",
-                image: AssetImage("assets/images/swiftIcon.png"),
-                size: 14,
-              ),
-              Container(
-                width: 1.5,
-                color: AppColors().primary,
-              ),
-              const WorkingTab(
-                text: "contact.py",
-                image: AssetImage("assets/images/pythonIcon.png"),
-                size: 14,
-              ),
-              Container(
-                width: 1.5,
-                color: AppColors().primary,
-              ),
-              const WorkingTab(
-                text: "projects.git",
-                image: AssetImage("assets/images/gitIcon.png"),
-                size: 14,
-              ),
+              (selectedScreen == 0)
+                  ? const ActiveWorkingTab(
+                      text: "main.dart",
+                      image: AssetImage("assets/images/dartIcon.webp"),
+                      size: 14,
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedScreen = 0;
+                        });
+                      },
+                      child: const WorkingTab(
+                        text: "main.dart",
+                        image: AssetImage("assets/images/dartIcon.webp"),
+                        size: 14,
+                      ),
+                    ),
+              Container(width: 1.5, color: AppColors().primary),
+              (selectedScreen == 1)
+                  ? const ActiveWorkingTab(
+                      text: "about.swift",
+                      image: AssetImage("assets/images/swiftIcon.png"),
+                      size: 14,
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedScreen = 1;
+                        });
+                      },
+                      child: const WorkingTab(
+                        text: "about.swift",
+                        image: AssetImage("assets/images/swiftIcon.png"),
+                        size: 14,
+                      ),
+                    ),
+              Container(width: 1.5, color: AppColors().primary),
+              (selectedScreen == 2)
+                  ? const ActiveWorkingTab(
+                      text: "contact.py",
+                      image: AssetImage("assets/images/pythonIcon.png"),
+                      size: 14,
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedScreen = 2;
+                        });
+                      },
+                      child: const WorkingTab(
+                        text: "contact.py",
+                        image: AssetImage("assets/images/pythonIcon.png"),
+                        size: 14,
+                      ),
+                    ),
+              Container(width: 1.5, color: AppColors().primary),
+              (selectedScreen == 3)
+                  ? const ActiveWorkingTab(
+                      text: "projects.git",
+                      image: AssetImage("assets/images/gitIcon.png"),
+                      size: 14,
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedScreen = 3;
+                        });
+                      },
+                      child: const WorkingTab(
+                        text: "projects.git",
+                        image: AssetImage("assets/images/gitIcon.png"),
+                        size: 14,
+                      ),
+                    ),
             ],
           ),
         ],
@@ -157,22 +200,22 @@ class _MainBarState extends State<MainBar> {
   Column pagesList() {
     return Column(
       children: const [
-        PageButton(
+        ListPageButton(
           text: "main.dart",
           image: AssetImage("assets/images/dartIcon.webp"),
           size: 14,
         ),
-        PageButton(
+        ListPageButton(
           text: "about.swift",
           image: AssetImage("assets/images/swiftIcon.png"),
           size: 14,
         ),
-        PageButton(
+        ListPageButton(
           text: "contact.py",
           image: AssetImage("assets/images/pythonIcon.png"),
           size: 14,
         ),
-        PageButton(
+        ListPageButton(
           text: "projects.git",
           image: AssetImage("assets/images/gitIcon.png"),
           size: 14,
@@ -195,15 +238,18 @@ class WorkingTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors().navBar,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 10.0, right: 25.0, left: 8),
-        child: Center(
-          child: PageButton(
-            text: text,
-            image: image,
-            size: size,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: Container(
+        color: AppColors().navBar,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 10.0, right: 25.0, left: 8),
+          child: Center(
+            child: PageButton(
+              text: text,
+              image: image,
+              size: size,
+            ),
           ),
         ),
       ),
@@ -211,8 +257,88 @@ class WorkingTab extends StatelessWidget {
   }
 }
 
+class ActiveWorkingTab extends StatelessWidget {
+  const ActiveWorkingTab({
+    Key? key,
+    required this.text,
+    required this.image,
+    required this.size,
+  }) : super(key: key);
+  final String text;
+  final AssetImage image;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: Column(
+        children: [
+          Container(
+            color: Colors.orange,
+            width: 0.08.sw,
+            height: 1,
+          ),
+          Container(
+            color: AppColors().primary,
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(bottom: 10.0, right: 25.0, left: 8),
+              child: Center(
+                child: Column(
+                  children: [
+                    PageButton(
+                      text: text,
+                      image: image,
+                      size: size,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class PageButton extends StatelessWidget {
   const PageButton({
+    Key? key,
+    required this.text,
+    required this.image,
+    required this.size,
+  }) : super(key: key);
+  final String text;
+  final AssetImage image;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 18.0, right: 8.0),
+            child: Image(
+              image: image,
+              width: size,
+            ),
+          ),
+          Text(
+            text,
+            style: TextStyle(color: Colors.grey.shade300, fontSize: 14),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class ListPageButton extends StatelessWidget {
+  const ListPageButton({
     Key? key,
     required this.text,
     required this.image,
