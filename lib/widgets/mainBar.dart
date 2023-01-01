@@ -162,32 +162,35 @@ class _MainBarState extends State<MainBar> {
                   listview = !listview;
                 });
               },
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: listview
-                        ? Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: Colors.grey.shade500,
-                            size: 20,
-                          )
-                        : Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            color: Colors.grey.shade500,
-                            size: 20,
-                          ),
-                  ),
-                  Text(
-                    "PORTFOLIO",
-                    style: TextStyle(
-                      color: Colors.grey.shade300,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                      letterSpacing: 1.5,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: listview
+                          ? Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: Colors.grey.shade500,
+                              size: 20,
+                            )
+                          : Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              color: Colors.grey.shade500,
+                              size: 20,
+                            ),
                     ),
-                  )
-                ],
+                    Text(
+                      "PORTFOLIO",
+                      style: TextStyle(
+                        color: Colors.grey.shade300,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        letterSpacing: 1.5,
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -337,7 +340,7 @@ class PageButton extends StatelessWidget {
   }
 }
 
-class ListPageButton extends StatelessWidget {
+class ListPageButton extends StatefulWidget {
   const ListPageButton({
     Key? key,
     required this.text,
@@ -349,24 +352,70 @@ class ListPageButton extends StatelessWidget {
   final double size;
 
   @override
+  State<ListPageButton> createState() => _ListPageButtonState();
+}
+
+class _ListPageButtonState extends State<ListPageButton> {
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 8.0),
-            child: Image(
-              image: image,
-              width: size,
+    return OnHover(
+      builder: ((isHovered) {
+        final color = isHovered ? AppColors().primary : AppColors().navBar;
+        return Container(
+          color: color,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Center(
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0, right: 8.0),
+                    child: Image(
+                      image: widget.image,
+                      width: widget.size,
+                    ),
+                  ),
+                  Text(
+                    widget.text,
+                    style: TextStyle(color: Colors.grey.shade300, fontSize: 14),
+                  )
+                ],
+              ),
             ),
           ),
-          Text(
-            text,
-            style: TextStyle(color: Colors.grey.shade300, fontSize: 14),
-          )
-        ],
+        );
+      }),
+    );
+  }
+}
+
+class OnHover extends StatefulWidget {
+  final Widget Function(bool isHovered) builder;
+  const OnHover({Key? key, required this.builder}) : super(key: key);
+  @override
+  _OnHoverState createState() => _OnHoverState();
+}
+
+class _OnHoverState extends State<OnHover> {
+  bool isHovered = false;
+  @override
+  Widget build(BuildContext context) {
+    final hovered = Matrix4.identity()..translate(0, 0, 0);
+    final transform = isHovered ? hovered : Matrix4.identity();
+    return MouseRegion(
+      onEnter: (_) => onEntered(true),
+      onExit: (_) => onEntered(false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        transform: transform,
+        child: widget.builder(isHovered),
       ),
     );
+  }
+
+  void onEntered(bool isHovered) {
+    setState(() {
+      this.isHovered = isHovered;
+    });
   }
 }
