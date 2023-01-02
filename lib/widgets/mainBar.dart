@@ -7,6 +7,9 @@ import 'package:portfolio/pages/contact.dart';
 import 'package:portfolio/pages/mainpage.dart';
 import 'package:portfolio/pages/projects.dart';
 
+import 'onHover.dart';
+import 'workingTabs.dart';
+
 class MainBar extends StatefulWidget {
   const MainBar({super.key});
 
@@ -46,46 +49,62 @@ class _MainBarState extends State<MainBar> {
       width: 0.04.sw,
       child: Column(
         children: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedScreen = 0;
-              });
-            },
-            child: const SideBarIconWidget(
-              icon: FontAwesomeIcons.code,
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedScreen = 1;
-              });
-            },
-            child: const SideBarIconWidget(
-              icon: FontAwesomeIcons.codeBranch,
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedScreen = 2;
-              });
-            },
-            child: const SideBarIconWidget(
-              icon: FontAwesomeIcons.phone,
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedScreen = 3;
-              });
-            },
-            child: const SideBarIconWidget(
-              icon: FontAwesomeIcons.bookBookmark,
-            ),
-          ),
+          (selectedScreen == 0)
+              ? const ActiveSideBarIconWidget(
+                  icon: FontAwesomeIcons.code,
+                )
+              : GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedScreen = 0;
+                    });
+                  },
+                  child: const SideBarIconWidget(
+                    icon: FontAwesomeIcons.code,
+                  ),
+                ),
+          (selectedScreen == 1)
+              ? const ActiveSideBarIconWidget(
+                  icon: FontAwesomeIcons.codeBranch,
+                )
+              : GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedScreen = 1;
+                    });
+                  },
+                  child: const SideBarIconWidget(
+                    icon: FontAwesomeIcons.codeBranch,
+                  ),
+                ),
+          (selectedScreen == 2)
+              ? const ActiveSideBarIconWidget(
+                  icon: FontAwesomeIcons.phone,
+                )
+              : GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedScreen = 2;
+                    });
+                  },
+                  child: const SideBarIconWidget(
+                    icon: FontAwesomeIcons.phone,
+                  ),
+                ),
+          (selectedScreen == 3)
+              ? const ActiveSideBarIconWidget(
+                  icon: FontAwesomeIcons.bookBookmark,
+                )
+              : GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      selectedScreen = 3;
+                    });
+                  },
+                  child: const SideBarIconWidget(
+                    icon: FontAwesomeIcons.bookBookmark,
+                  ),
+                ),
         ],
       ),
     );
@@ -327,20 +346,29 @@ class SideBarIconWidget extends StatelessWidget {
             isHovered ? Colors.grey.shade400 : Colors.grey.shade700;
         return MouseRegion(
           cursor: SystemMouseCursors.click,
-          child: Flexible(
-            child: Container(
-              color: color,
-              width: double.infinity,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 1),
-                child: Icon(
-                  icon,
-                  color: iconcolor,
-                  size: 20,
+          child: Row(
+            children: [
+              Container(
+                color: color,
+                width: 1,
+                height: 38,
+              ),
+              Flexible(
+                child: Container(
+                  color: color,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 1),
+                    child: Icon(
+                      icon,
+                      color: iconcolor,
+                      size: 20,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         );
       },
@@ -348,114 +376,46 @@ class SideBarIconWidget extends StatelessWidget {
   }
 }
 
-class WorkingTab extends StatelessWidget {
-  const WorkingTab({
+class ActiveSideBarIconWidget extends StatelessWidget {
+  const ActiveSideBarIconWidget({
     Key? key,
-    required this.text,
-    required this.image,
-    required this.size,
+    required this.icon,
   }) : super(key: key);
-  final String text;
-  final AssetImage image;
-  final double size;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: Container(
-        color: AppColors().navBar,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 10.0, right: 25.0, left: 8),
-          child: Center(
-            child: PageButton(
-              text: text,
-              image: image,
-              size: size,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ActiveWorkingTab extends StatelessWidget {
-  const ActiveWorkingTab({
-    Key? key,
-    required this.text,
-    required this.image,
-    required this.size,
-  }) : super(key: key);
-  final String text;
-  final AssetImage image;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: Column(
-        children: [
-          Container(
-            color: Colors.orange,
-            width: 0.08.sw,
-            height: 1,
-          ),
-          Container(
-            color: AppColors().primary,
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(bottom: 10.0, right: 25.0, left: 8),
-              child: Center(
-                child: Column(
-                  children: [
-                    PageButton(
-                      text: text,
-                      image: image,
-                      size: size,
+    return OnHover(
+      builder: (isHovered) {
+        final color = isHovered ? AppColors().navBar : AppColors().primary;
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Row(
+            children: [
+              Container(
+                color: Colors.orange,
+                width: 1,
+                height: 38,
+              ),
+              Flexible(
+                child: Container(
+                  color: color,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 1),
+                    child: Icon(
+                      icon,
+                      color: Colors.grey.shade400,
+                      size: 20,
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class PageButton extends StatelessWidget {
-  const PageButton({
-    Key? key,
-    required this.text,
-    required this.image,
-    required this.size,
-  }) : super(key: key);
-  final String text;
-  final AssetImage image;
-  final double size;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 8.0),
-            child: Image(
-              image: image,
-              width: size,
-            ),
-          ),
-          Text(
-            text,
-            style: TextStyle(color: Colors.grey.shade300, fontSize: 14),
-          )
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -510,36 +470,5 @@ class _ListPageButtonState extends State<ListPageButton> {
         );
       }),
     );
-  }
-}
-
-class OnHover extends StatefulWidget {
-  final Widget Function(bool isHovered) builder;
-  const OnHover({Key? key, required this.builder}) : super(key: key);
-  @override
-  _OnHoverState createState() => _OnHoverState();
-}
-
-class _OnHoverState extends State<OnHover> {
-  bool isHovered = false;
-  @override
-  Widget build(BuildContext context) {
-    final hovered = Matrix4.identity()..translate(0, 0, 0);
-    final transform = isHovered ? hovered : Matrix4.identity();
-    return MouseRegion(
-      onEnter: (_) => onEntered(true),
-      onExit: (_) => onEntered(false),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        transform: transform,
-        child: widget.builder(isHovered),
-      ),
-    );
-  }
-
-  void onEntered(bool isHovered) {
-    setState(() {
-      this.isHovered = isHovered;
-    });
   }
 }
