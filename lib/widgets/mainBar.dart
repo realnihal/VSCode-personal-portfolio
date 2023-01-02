@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:portfolio/constants/colors.dart';
 import 'package:portfolio/pages/about.dart';
 import 'package:portfolio/pages/contact.dart';
@@ -27,18 +28,63 @@ class _MainBarState extends State<MainBar> {
     return Expanded(
       child: Row(
         children: [
-          SizedBox(
-            width: 0.04.sw,
-            child: Column(
-              children: const [],
-            ),
-          ),
+          sideBar(),
           explorerBar(),
           Column(
             children: [
               workingNavigationBar(),
               Expanded(child: pages[selectedScreen]),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  SizedBox sideBar() {
+    return SizedBox(
+      width: 0.04.sw,
+      child: Column(
+        children: [
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedScreen = 0;
+              });
+            },
+            child: const SideBarIconWidget(
+              icon: FontAwesomeIcons.code,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedScreen = 1;
+              });
+            },
+            child: const SideBarIconWidget(
+              icon: FontAwesomeIcons.codeBranch,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedScreen = 2;
+              });
+            },
+            child: const SideBarIconWidget(
+              icon: FontAwesomeIcons.phone,
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                selectedScreen = 3;
+              });
+            },
+            child: const SideBarIconWidget(
+              icon: FontAwesomeIcons.bookBookmark,
+            ),
           ),
         ],
       ),
@@ -265,6 +311,43 @@ class _MainBarState extends State<MainBar> {
   }
 }
 
+class SideBarIconWidget extends StatelessWidget {
+  const SideBarIconWidget({
+    Key? key,
+    required this.icon,
+  }) : super(key: key);
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return OnHover(
+      builder: (isHovered) {
+        final color = isHovered ? AppColors().navBar : AppColors().primary;
+        final iconcolor =
+            isHovered ? Colors.grey.shade400 : Colors.grey.shade700;
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Flexible(
+            child: Container(
+              color: color,
+              width: double.infinity,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 1),
+                child: Icon(
+                  icon,
+                  color: iconcolor,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 class WorkingTab extends StatelessWidget {
   const WorkingTab({
     Key? key,
@@ -398,25 +481,29 @@ class _ListPageButtonState extends State<ListPageButton> {
     return OnHover(
       builder: ((isHovered) {
         final color = isHovered ? AppColors().primary : AppColors().navBar;
-        return Container(
-          color: color,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
-            child: Center(
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 18.0, right: 8.0),
-                    child: Image(
-                      image: widget.image,
-                      width: widget.size,
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Container(
+            color: color,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Center(
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 18.0, right: 8.0),
+                      child: Image(
+                        image: widget.image,
+                        width: widget.size,
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.text,
-                    style: TextStyle(color: Colors.grey.shade300, fontSize: 14),
-                  )
-                ],
+                    Text(
+                      widget.text,
+                      style:
+                          TextStyle(color: Colors.grey.shade300, fontSize: 14),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
