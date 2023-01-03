@@ -34,9 +34,10 @@ class _MainBarState extends State<MainBar> {
           sideBar(),
           explorerBar(),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               workingNavigationBar(),
-              Expanded(child: pages[selectedScreen]),
+              pages[selectedScreen],
             ],
           ),
         ],
