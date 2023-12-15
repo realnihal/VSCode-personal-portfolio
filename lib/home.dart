@@ -13,9 +13,9 @@ class HomePage extends StatelessWidget {
     AppColors colors = AppColors();
     return Scaffold(
       backgroundColor: colors.primary,
-      body: Column(
+      body: const Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [TopNavBar(), MainBar(), BottomNavBar()],
+        children: [TopNavBar(), MainBar(), BottomNavBar()],
       ),
     );
   }

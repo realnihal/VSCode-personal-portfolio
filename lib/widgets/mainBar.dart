@@ -19,6 +19,7 @@ class MainBar extends StatefulWidget {
 
 class _MainBarState extends State<MainBar> {
   bool listview = true;
+  bool bloglistview = true;
   int selectedScreen = 0;
   List<Widget> pages = [
     const MainPage(),
@@ -229,20 +230,22 @@ class _MainBarState extends State<MainBar> {
               ),
             ),
           ),
+          PortfolioDropDown(),
+          listview ? portfolioPagesList() : Container(),
           MouseRegion(
             cursor: SystemMouseCursors.click,
             child: GestureDetector(
               onTap: () {
                 setState(() {
-                  listview = !listview;
+                  bloglistview = !bloglistview;
                 });
               },
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
+                      padding: const EdgeInsets.only(left: 15.0),
                       child: listview
                           ? Icon(
                               Icons.keyboard_arrow_down_rounded,
@@ -256,11 +259,13 @@ class _MainBarState extends State<MainBar> {
                             ),
                     ),
                     Text(
-                      "PORTFOLIO",
+                      "MY BLOGS",
                       style: TextStyle(
+                        fontFamily: "Cascadia",
                         color: Colors.grey.shade300,
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
+                        height: 20 / 13,
                         letterSpacing: 1.5,
                       ),
                     )
@@ -269,13 +274,57 @@ class _MainBarState extends State<MainBar> {
               ),
             ),
           ),
-          listview ? pagesList() : Container()
         ],
       ),
     );
   }
 
-  Column pagesList() {
+  MouseRegion PortfolioDropDown() {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            listview = !listview;
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15.0),
+                child: listview
+                    ? Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Colors.grey.shade500,
+                        size: 20,
+                      )
+                    : Icon(
+                        Icons.keyboard_arrow_right_rounded,
+                        color: Colors.grey.shade500,
+                        size: 20,
+                      ),
+              ),
+              Text(
+                "PORTFOLIO",
+                style: TextStyle(
+                  fontFamily: "Cascadia",
+                  color: Colors.grey.shade300,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  height: 20 / 13,
+                  letterSpacing: 1.5,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Column portfolioPagesList() {
     return Column(
       children: [
         GestureDetector(
@@ -447,7 +496,7 @@ class _ListPageButtonState extends State<ListPageButton> {
           child: Container(
             color: color,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Center(
                 child: Row(
                   children: [
