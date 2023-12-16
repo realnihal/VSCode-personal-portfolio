@@ -38,7 +38,7 @@ class TopNavBar extends StatelessWidget {
         child: MouseRegion(
           cursor: SystemMouseCursors.text,
           child: Text(
-            "Nihal Puram - Visual Studio Code",
+            "Nihal Puram - VSCode",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w500,
@@ -114,7 +114,7 @@ class TopNavBar extends StatelessWidget {
           NavBarTextItem(text: 'File'),
           NavBarTextItem(text: 'Edit'),
           NavBarTextItem(text: 'View'),
-          NavBarTextItem(text: 'Go'),
+          // NavBarTextItem(text: 'Go'),
           NavBarTextItem(text: 'Run'),
           NavBarTextItem(text: 'Terminal'),
           NavBarTextItem(text: 'Help'),

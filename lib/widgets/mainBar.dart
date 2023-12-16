@@ -22,10 +22,10 @@ class _MainBarState extends State<MainBar> {
   bool bloglistview = true;
   int selectedScreen = 0;
   List<Widget> pages = [
+    const ProjectsPage(),
     const MainPage(),
     const AboutPage(),
     const ContactPage(),
-    const ProjectsPage(),
   ];
   @override
   Widget build(BuildContext context) {
